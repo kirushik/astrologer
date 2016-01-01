@@ -34,7 +34,8 @@ defmodule Astrologer.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.9"},
       {:cowboy, "~> 1.0"},
-      {:rethinkdb, "~> 0.2.2"}
-   ]
+      {:rethinkdb, "~> 0.2.2"},
+      {:credo, "~> 0.2", only: [:dev, :test]}
+    ]
   end
 end
