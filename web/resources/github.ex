@@ -13,9 +13,24 @@ defmodule Astrologer.Github do
     defstruct [:full_name, :stargazers_count, :forks_count]
   end
 
+  defp get_starred(path \\ "/user/starred") do
+    {:ok, %HTTPoison.Response{body: body, headers: headers}} = Client.get path
+    {"Link", links} = List.keyfind headers, "Link", 0
+    links = links |> String.split(", ") |> Enum.map(&(String.split(&1)))
+    [next, _] = links |> Enum.find( &( [_ , "rel=\"next\""] = &1 ) )
+    {Poison.decode!(body, as: [StarredRepo]), next}
+  end
+
+  #defp pop_starred({[], nil}) do
+  #end
+  #defp pop_starred({[], next}) do
+  #end
+  defp pop_starred({[repo | repos], next}) do
+    {[repo], {repos, next}}
+  end
+
   def starred do
-    {:ok, %HTTPoison.Response{body: body}} = Client.get "/user/starred"
-    body |> Poison.decode!(as: [StarredRepo])
+    Stream.resource(&get_starred/0, &pop_starred/1, fn(_) -> end) # Last function is basically noop/1
   end
 
 end
