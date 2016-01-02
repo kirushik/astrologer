@@ -35,7 +35,8 @@ defmodule Astrologer.Mixfile do
       {:gettext, "~> 0.9"},
       {:cowboy, "~> 1.0"},
       {:rethinkdb, "~> 0.2.2"},
-      {:credo, "~> 0.2", only: [:dev, :test]}
+      {:credo, "~> 0.2", only: [:dev, :test]},
+      {:tentacat, "~> 0.3.0"}
     ]
   end
 end
