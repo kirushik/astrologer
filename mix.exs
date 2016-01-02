@@ -17,7 +17,7 @@ defmodule Astrologer.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Astrologer, []},
-     applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext]]
+     applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext, :httpoison]]
   end
 
   # Specifies which paths to compile per environment.
@@ -36,7 +36,7 @@ defmodule Astrologer.Mixfile do
       {:cowboy, "~> 1.0"},
       {:rethinkdb, "~> 0.2.2"},
       {:credo, "~> 0.2", only: [:dev, :test]},
-      {:tentacat, "~> 0.3.0"}
+      {:httpoison, "~> 0.8.0"}
     ]
   end
 end
