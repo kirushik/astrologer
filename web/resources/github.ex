@@ -8,13 +8,21 @@ defmodule Astrologer.Github do
     defp process_url(url), do: Path.join(@endpoint, url)
     defp process_request_headers(headers), do: headers ++ [{"Authorization", "token #{@token}"}]
   end
-
+  
   defmodule StarredRepo do
-    defstruct [:full_name, :stargazers_count, :forks_count]
+    defstruct [:full_name, :description, :html_url, :homepage]
+
+    import RethinkDB.Query
+
+    defp repos, do: table("repos")
+
+    def persist(%StarredRepo{} = repo) do
+      repos |> insert(Map.from_struct(repo)) |> Astrologer.Database.run
+    end
   end
 
   defp extract_next links do
-    next = links = links |> String.split(", ")
+    next = links |> String.split(", ")
                          |> Enum.map(&(String.split(&1)))
                          |> Enum.find( &( List.last(&1) == "rel=\"next\"" ) )
     case next do
@@ -44,7 +52,7 @@ defmodule Astrologer.Github do
   end
 
   def starred do
-    Stream.resource(&get_starred/0, &pop_starred/1, fn(:ok) -> :ok end)
+    Stream.resource(&get_starred/0, &pop_starred/1, fn(_) -> :ok end)
   end
 
 end
