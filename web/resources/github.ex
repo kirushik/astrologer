@@ -2,7 +2,7 @@ defmodule Astrologer.Github do
   defmodule Client do
     use HTTPoison.Base
     @endpoint "https://api.github.com"
-    @token Application.get_env(:astrologer, Astrologer.Endpoint)[:access_token]
+    @token Application.get_env(:astrologer, Astrologer.Github)[:access_token]
 
     defp process_url(<<"http", _ :: binary>>=url), do: url
     defp process_url(url), do: Path.join(@endpoint, url)
@@ -17,7 +17,8 @@ defmodule Astrologer.Github do
     defp repos, do: table("repos")
 
     def persist(%StarredRepo{} = repo) do
-      repos |> insert(Map.from_struct(repo)) |> Astrologer.Database.run
+      %RethinkDB.Record{data: %{"errors" => 0}} = repos |> insert(Map.from_struct(repo), %{conflict: :update}) 
+                                                        |> Astrologer.Database.run
     end
   end
 
