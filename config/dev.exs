@@ -25,6 +25,9 @@ config :astrologer, Astrologer.Endpoint,
     ]
   ]
 
+config :astrologer, Astrologer.Database,
+  [host: "localhost", port: 28015, db: "development"]
+
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
 

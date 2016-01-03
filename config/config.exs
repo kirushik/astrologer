@@ -19,7 +19,7 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-config :astrologer, Astrologer.Endpoint,
+config :astrologer, Astrologer.Github,
   access_token: System.get_env("GITHUB_ACCESS_TOKEN")
 
 # Import environment specific config. This must remain at the bottom

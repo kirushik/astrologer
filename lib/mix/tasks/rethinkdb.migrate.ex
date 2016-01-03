@@ -10,7 +10,7 @@ defmodule Mix.Tasks.Database.Migrate do
   """
 
   def run(_args) do
-    Astrologer.Database.start_link([host: "localhost", port: 28015, db: "development"])
-    table_create("repos", primaryKey: "full_name") |> Astrologer.Database.run
+    Astrologer.Database.start_link(Application.get_env(:astrologer, Astrologer.Database))
+    table_create("repos", %{primary_key: "full_name"}) |> Astrologer.Database.run
   end
 end

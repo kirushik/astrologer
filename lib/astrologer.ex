@@ -9,7 +9,7 @@ defmodule Astrologer do
     children = [
       # Start the endpoint when the application starts
       supervisor(Astrologer.Endpoint, []),
-      worker(Astrologer.Database, [[host: "localhost", port: 28015, db: "development"]]),
+      worker(Astrologer.Database, [Application.get_env(:astrologer, Astrologer.Database)]),
       # Here you could define other workers and supervisors as children
       # worker(Astrologer.Worker, [arg1, arg2, arg3]),
     ]
