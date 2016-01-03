@@ -8,7 +8,7 @@ defmodule Astrologer.Github do
     defp process_url(url), do: Path.join(@endpoint, url)
     defp process_request_headers(headers), do: headers ++ [{"Authorization", "token #{@token}"}]
   end
-  
+
   defmodule StarredRepo do
     defstruct [:full_name, :description, :html_url, :homepage]
 
@@ -23,8 +23,8 @@ defmodule Astrologer.Github do
 
   defp extract_next links do
     next = links |> String.split(", ")
-                         |> Enum.map(&(String.split(&1)))
-                         |> Enum.find( &( List.last(&1) == "rel=\"next\"" ) )
+                 |> Enum.map(&(String.split(&1)))
+                 |> Enum.find( &( List.last(&1) == "rel=\"next\"" ) )
     case next do
       nil -> nil
       [next, _] -> Regex.run(~r/<(.+)>;/, next) |> List.last
