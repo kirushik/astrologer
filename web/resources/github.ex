@@ -20,6 +20,16 @@ defmodule Astrologer.Github do
       %RethinkDB.Record{data: %{"errors" => 0}} = repos |> insert(Map.from_struct(repo), %{conflict: :update}) 
                                                         |> Astrologer.Database.run
     end
+
+    def index(nil), do: index(1)
+    def index(page) when is_binary(page) do
+      {page, ""} = page |> Integer.parse
+      index(page)
+    end
+    def index(page) do
+      %RethinkDB.Collection{data: data} =  repos |> slice((page-1)*10, page * 10) |> Astrologer.Database.run
+      data
+    end
   end
 
   defp extract_next links do

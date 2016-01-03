@@ -1,0 +1,17 @@
+<table>
+  <%= for repo <- @repos do %>
+    <tr>
+      <td>
+        <a href="<%= repo["html_url"] %>">
+          <%= repo["full_name"] %>
+        </a>
+      </td>
+      <td><%= repo["description"] %></td>
+      <td>
+        <a href="<%= repo["homepage"] %>">
+          <%= repo["homepage"] %>
+        </a>
+      </td>
+    </tr>
+  <% end %>
+</table>
