@@ -19,6 +19,11 @@
 <p>
 Page <%= @page %> of <%= @pages %>
 </p>
-<a href="<%= repo_path(@conn, :index, page: @page-1) %>">« Previous</a>
-<a href="<%= repo_path(@conn, :index, page: @page+1) %>">Next »</a>
+
+<%= if @page>1 do %>
+  <a href="<%= repo_path(@conn, :index, page: @page-1) %>">« Previous</a>
+<% end %>
+<%= if @page<@pages do %>
+  <a href="<%= repo_path(@conn, :index, page: @page+1) %>">Next »</a>
+<% end %>
 
