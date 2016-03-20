@@ -29,13 +29,13 @@ defmodule Astrologer.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.1.1"},
-      {:phoenix_html, "~> 2.3"},
+      {:phoenix, "~> 1.1.4"},
+      {:phoenix_html, "~> 2.5"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
-      {:gettext, "~> 0.9"},
+      {:gettext, "~> 0.10"},
       {:cowboy, "~> 1.0"},
-      {:rethinkdb, "~> 0.2.2"},
-      {:credo, "~> 0.2", only: [:dev, :test]},
+      {:rethinkdb, "~> 0.4.0"},
+      {:credo, "~> 0.3", only: [:dev, :test]},
       {:httpoison, "~> 0.8.0"}
     ]
   end
