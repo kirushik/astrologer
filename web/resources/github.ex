@@ -17,7 +17,7 @@ defmodule Astrologer.Github do
     defp repos, do: table("repos")
 
     def persist(%StarredRepo{} = repo) do
-      %RethinkDB.Record{data: %{"errors" => 0}} = repos |> insert(Map.from_struct(repo), %{conflict: :update}) 
+      %RethinkDB.Record{data: %{"errors" => 0}} = repos |> insert(Map.from_struct(repo), %{conflict: :update})
                                                         |> Astrologer.Database.run
     end
 
@@ -29,6 +29,11 @@ defmodule Astrologer.Github do
     def index(page) do
       %RethinkDB.Collection{data: data} =  repos |> slice((page-1)*10, page * 10) |> Astrologer.Database.run
       data
+    end
+
+    def pages do
+      %RethinkDB.Record{data: data} = repos |> count |> Astrologer.Database.run
+      div(data+9, 10)
     end
   end
 

@@ -15,3 +15,10 @@
     </tr>
   <% end %>
 </table>
+
+<p>
+Page <%= @page %> of <%= @pages %>
+</p>
+<a href="<%= repo_path(@conn, :index, page: @page-1) %>">« Previous</a>
+<a href="<%= repo_path(@conn, :index, page: @page+1) %>">Next »</a>
+
